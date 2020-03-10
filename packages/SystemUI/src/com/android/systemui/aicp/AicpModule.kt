@@ -27,6 +27,7 @@ import com.android.systemui.qs.tiles.CaffeineTile
 import com.android.systemui.qs.tiles.CompassTile;
 import com.android.systemui.qs.tiles.CPUInfoTile;
 import com.android.systemui.qs.tiles.DnsTile
+import com.android.systemui.qs.tiles.FPSInfoTile
 import com.android.systemui.qs.tiles.HeadsUpTile
 import com.android.systemui.qs.tiles.MusicTile
 import com.android.systemui.qs.tiles.OnTheGoTile;
@@ -95,6 +96,12 @@ interface AicpModule {
     @IntoMap
     @StringKey(DnsTile.TILE_SPEC)
     fun bindDnsTile(dnsTile: DnsTile): QSTileImpl<*>
+
+    /** Inject FPSInfoTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(FPSInfoTile.TILE_SPEC)
+    fun FPSInfoTile(fpsInfoTile: FPSInfoTile): QSTileImpl<*>
 
     /** Inject HeadsUpTile into tileMap in QSModule */
     @Binds
@@ -274,6 +281,19 @@ interface AicpModule {
                     QSTileUIConfig.Resource(
                         iconRes = R.drawable.ic_qs_compass_on,
                         labelRes = R.string.quick_settings_compass_label
+	    ),
+                instanceId = uiEventLogger.getNewInstanceId(),
+                category = TileCategory.UTILITIES,
+            )
+
+        @StringKey(FPSInfoTile.TILE_SPEC)
+        fun provideFPSInfoConfig(uiEventLogger: QsEventLogger): QSTileConfig =
+            QSTileConfig(
+                tileSpec = TileSpec.create(FPSInfoTile.TILE_SPEC),
+                uiConfig =
+                    QSTileUIConfig.Resource(
+                        iconRes = R.drawable.ic_qs_fps_info,
+                        labelRes = R.string.quick_settings_fpsinfo_label
                     ),
                 instanceId = uiEventLogger.getNewInstanceId(),
                 category = TileCategory.UTILITIES,
@@ -281,7 +301,7 @@ interface AicpModule {
 
         @Provides
         @IntoMap
-        @StringKey(CPUINFO_TILE_SPEC)
+	@StringKey(CPUINFO_TILE_SPEC)
         fun provideCpuInfoTileConfig(uiEventLogger: QsEventLogger): QSTileConfig =
             QSTileConfig(
                 tileSpec = TileSpec.create(CPUINFO_TILE_SPEC),
