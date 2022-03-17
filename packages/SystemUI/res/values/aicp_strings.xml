@@ -143,4 +143,7 @@
 
     <!-- FPS view text placeholder -->
     <string name="fps_text_placeholder">FPS: <xliff:g id="fps" example="90">%1$d</xliff:g></string>
+
+    <!-- Quick controls -->
+    <string name="quick_controls_subtitle">Add controls for your connected devices</string>
 </resources>
