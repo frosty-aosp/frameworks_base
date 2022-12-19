@@ -134,4 +134,7 @@
 
     <!-- 4G icon -->
     <string name="show_fourg_icon_title">4G icon</string>
+
+    <!-- Screenshot Tile -->
+    <string name="screenshot_long_press">Long press - selected region</string>
 </resources>
