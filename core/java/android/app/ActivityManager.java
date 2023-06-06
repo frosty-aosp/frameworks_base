@@ -41,6 +41,7 @@ import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.annotation.TestApi;
 import android.annotation.UserIdInt;
+import android.app.compat.gms.GmsCompat;
 import android.compat.annotation.ChangeId;
 import android.compat.annotation.EnabledSince;
 import android.compat.annotation.UnsupportedAppUsage;
@@ -94,6 +95,8 @@ import android.view.WindowInsetsController.Appearance;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.app.LocalePicker;
 import com.android.internal.app.procstats.ProcessStats;
+import com.android.internal.gmscompat.sysservice.GmcUserManager;
+import com.android.internal.gmscompat.GmsHooks;
 import com.android.internal.os.RoSystemProperties;
 import com.android.internal.os.TransferPipe;
 import com.android.internal.util.FastPrintWriter;
@@ -4494,7 +4497,11 @@ public class ActivityManager {
     public List<RunningAppProcessInfo> getRunningAppProcesses() {
         return mRunningProcessesCache.get(() -> {
             try {
-                return getService().getRunningAppProcesses();
+                List<RunningAppProcessInfo> res = getService().getRunningAppProcesses();
+                if (GmsCompat.isEnabled()) {
+                    res = GmsHooks.addRecentlyBoundPids(mContext, res);
+                }
+                return res;
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
@@ -5522,6 +5529,10 @@ public class ActivityManager {
     })
     @android.ravenwood.annotation.RavenwoodReplace
     public static int getCurrentUser() {
+        if (GmsCompat.isEnabled()) {
+            return GmcUserManager.amGetCurrentUser();
+        }
+
         return mGetCurrentUserIdCache.query(null);
     }
 
@@ -5846,6 +5857,10 @@ public class ActivityManager {
      */
     @UnsupportedAppUsage
     public boolean isUserRunning(int userId) {
+        if (GmsCompat.isEnabled()) {
+            return GmcUserManager.amIsUserRunning(userId);
+        }
+
         try {
             return getService().isUserRunning(userId, 0);
         } catch (RemoteException e) {
