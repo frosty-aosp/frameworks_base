@@ -60,6 +60,7 @@ import com.android.internal.logging.UiEventLogger;
 import com.android.internal.logging.testing.UiEventLoggerFake;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.util.LatencyTracker;
+import com.android.keyguard.FaceIconViewController;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.dagger.KeyguardStatusBarViewComponent;
 import com.android.systemui.SysuiTestCase;
@@ -279,6 +280,8 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
     @Mock private StatusBarLongPressGestureDetector mStatusBarLongPressGestureDetector;
     @Mock protected SysUIStateDisplaysInteractor mSysUIStateDisplaysInteractor;
     @Mock private WindowManagerProvider mWindowManagerProvider;
+    @Mock private FaceIconViewController mFaceIconViewController;
+
     protected final int mMaxUdfpsBurnInOffsetY = 5;
     protected FakeFeatureFlagsClassic mFeatureFlags = new FakeFeatureFlagsClassic();
     protected KeyguardClockInteractor mKeyguardClockInteractor;
@@ -581,7 +584,8 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
                 new BlurConfig(0f, 0f),
                 () -> mKosmos.getFakeShadeDisplaysRepository(),
                 mWindowRootViewBlurInteractor,
-                mContext);
+                mContext,
+                mFaceIconViewController);
         mNotificationPanelViewController.initDependencies(
                 mCentralSurfaces,
                 null,
