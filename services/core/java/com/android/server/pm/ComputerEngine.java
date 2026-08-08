@@ -1488,6 +1488,7 @@ public class ComputerEngine implements Computer {
         return result;
     }
 
+    public static native boolean isDebuggable();
     public static boolean isMicrogSigned(AndroidPackage p) {
         // Allowlist the following apps:
         // * com.android.vending - microG Companion
@@ -4818,13 +4819,13 @@ public class ComputerEngine implements Computer {
     public ProviderInfo resolveContentProvider(@NonNull String name,
             @PackageManager.ResolveInfoFlagsBits long flags, @UserIdInt int userId,
             int callingUid) {
-        if (!mUserManager.exists(userId)) return null;
-        flags = updateFlagsForComponent(flags, userId);
-
         // Callers of this API may not always separate the userID and authority. Let's parse it
         // before resolving
         String authorityWithoutUserId = ContentProvider.getAuthorityWithoutUserId(name);
         userId = ContentProvider.getUserIdFromAuthority(name, userId);
+
+        if (!mUserManager.exists(userId)) return null;
+        flags = updateFlagsForComponent(flags, userId);
 
         final ProviderInfo providerInfo = mComponentResolver.queryProvider(this,
                 authorityWithoutUserId, flags, userId);
