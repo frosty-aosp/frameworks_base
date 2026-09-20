@@ -77,7 +77,7 @@ public class GlobalActionsImpl implements GlobalActions, CommandQueue.Callbacks 
     @Override
     public void showGlobalActions(GlobalActionsManager manager) {
         if (mDisabled) return;
-        fullDialog = Settings.System.getInt(
+        fullDialog = Settings.Secure.getInt(
                 mContext.getContentResolver(), Settings.Secure.POWER_MENU_TYPE, 0) == 1;
         GlobalActionsDialogLite globalActionsDialog =
                 fullDialog ? mGlobalActionsDialog : mGlobalActionsDialogLite;
