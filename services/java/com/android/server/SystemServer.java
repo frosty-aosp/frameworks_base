@@ -183,7 +183,7 @@ import com.android.server.display.FreeformService;
 import com.android.server.display.color.ColorDisplayService;
 import com.android.server.dreams.DreamManagerService;
 import com.android.server.emergency.EmergencyAffordanceService;
-import com.android.server.ext.MicroGPermissionService;
+import com.android.server.ext.FaceUnlockService;
 import com.android.server.flags.FeatureFlagsService;
 import com.android.server.gpu.GpuService;
 import com.android.server.grammaticalinflection.GrammaticalInflectionService;
@@ -2786,7 +2786,7 @@ public final class SystemServer implements Dumpable {
 
             if (hasFeatureFace) {
                 t.traceBegin("startLMOFaceUnlockService");
-                LMOSystemServer.startFaceUnlockService(context, mSystemServiceManager);
+                mSystemServiceManager.startService(FaceUnlockService.class);
                 t.traceEnd();
 
                 t.traceBegin("StartFaceSensor");
@@ -3675,7 +3675,6 @@ public final class SystemServer implements Dumpable {
             t.traceEnd();
 
             com.android.server.ext.SystemServerExt.init(mSystemContext, mPackageManagerService);
-            mSystemServiceManager.startService(FaceUnlockService.class);
         }, t);
 
         t.traceBegin("LockSettingsThirdPartyAppsStarted");
