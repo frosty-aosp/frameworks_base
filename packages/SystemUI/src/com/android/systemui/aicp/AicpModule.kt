@@ -151,17 +151,17 @@ interface AicpModule {
     @StringKey(RefreshRateTile.TILE_SPEC)
     fun bindRefreshRateTile(refreshRateTile: RefreshRateTile): QSTileImpl<*>
 
-    /** Inject SmartPixelsTile into tileMap in QSModule */
-    @Binds
-    @IntoMap
-    @StringKey(SmartPixelsTile.TILE_SPEC)
-    fun bindSmartPixelsTile(smartPixelsTile: SmartPixelsTile): QSTileImpl<*>
-
     /** Inject ScreenshotTile into tileMap in QSModule */
     @Binds
     @IntoMap
     @StringKey(ScreenshotTile.TILE_SPEC)
     fun bindScreenshotTile(screenshotTile: ScreenshotTile): QSTileImpl<*>
+
+    /** Inject SmartPixelsTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(SmartPixelsTile.TILE_SPEC)
+    fun bindSmartPixelsTile(smartPixelsTile: SmartPixelsTile): QSTileImpl<*>
 
     /** Inject SyncTile into tileMap in QSModule */
     @Binds
@@ -282,19 +282,6 @@ interface AicpModule {
                         iconRes = R.drawable.ic_qs_compass_on,
                         labelRes = R.string.quick_settings_compass_label
 	    ),
-                instanceId = uiEventLogger.getNewInstanceId(),
-                category = TileCategory.UTILITIES,
-            )
-
-        @StringKey(FPSInfoTile.TILE_SPEC)
-        fun provideFPSInfoConfig(uiEventLogger: QsEventLogger): QSTileConfig =
-            QSTileConfig(
-                tileSpec = TileSpec.create(FPSInfoTile.TILE_SPEC),
-                uiConfig =
-                    QSTileUIConfig.Resource(
-                        iconRes = R.drawable.ic_qs_fps_info,
-                        labelRes = R.string.quick_settings_fpsinfo_label
-                    ),
                 instanceId = uiEventLogger.getNewInstanceId(),
                 category = TileCategory.UTILITIES,
             )
@@ -451,19 +438,6 @@ interface AicpModule {
 
         @Provides
         @IntoMap
-        @StringKey(SmartPixelsTile.TILE_SPEC)
-        fun provideSmartPixelsTileConfig(uiEventLogger: QsEventLogger): QSTileConfig =
-            QSTileConfig(
-                tileSpec = TileSpec.create(SmartPixelsTile.TILE_SPEC),
-                uiConfig =
-                    QSTileUIConfig.Resource(
-                        iconRes = R.drawable.ic_qs_smart_pixels,
-                        labelRes = R.string.quick_settings_smart_pixels
-                    ),
-                instanceId = uiEventLogger.getNewInstanceId(),
-                category = TileCategory.DISPLAY,
-            )
-
         @StringKey(ScreenshotTile.TILE_SPEC)
         fun provideScreenshotTile(uiEventLogger: QsEventLogger): QSTileConfig =
             QSTileConfig(
@@ -475,6 +449,21 @@ interface AicpModule {
                     ),
                 instanceId = uiEventLogger.getNewInstanceId(),
                 category = TileCategory.UTILITIES,
+            )
+
+        @Provides
+        @IntoMap
+        @StringKey(SmartPixelsTile.TILE_SPEC)
+        fun provideSmartPixelsTileConfig(uiEventLogger: QsEventLogger): QSTileConfig =
+            QSTileConfig(
+                tileSpec = TileSpec.create(SmartPixelsTile.TILE_SPEC),
+                uiConfig =
+                    QSTileUIConfig.Resource(
+                        iconRes = R.drawable.ic_qs_smart_pixels,
+                        labelRes = R.string.quick_settings_smart_pixels
+                    ),
+                instanceId = uiEventLogger.getNewInstanceId(),
+                category = TileCategory.DISPLAY,
             )
 
         @Provides

@@ -78,10 +78,10 @@ public class ScreenshotTile extends QSTileImpl<BooleanState> {
         mPanelInteractor = panelInteractor;
     }
 
-    @Override
+/*    @Override
     public int getMetricsCategory() {
-        return MetricsEvent.AICP_SETTINGS;
-    }
+        return MetricsEvent.CRDROID_SETTINGS;
+    }*/
 
     @Override
     public BooleanState newTileState() {
