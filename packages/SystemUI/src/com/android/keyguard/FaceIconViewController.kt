@@ -135,7 +135,7 @@ class FaceIconViewController @Inject constructor(
                     || keyguardStateController.isKeyguardFadingAway()) && !simLocked
         ) {
             STATE_FACE_SUCCESS
-        } else if (deviceEntryFaceAuthInteractor.isRunning()) {
+        } else if (deviceEntryFaceAuthInteractor.isAuthRunning()) {
             STATE_FACE_SCANNING
         } else {
             STATE_FACE_FAILED
